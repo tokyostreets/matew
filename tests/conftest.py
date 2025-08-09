@@ -3,10 +3,6 @@ import json
 
 @pytest.fixture
 def create_log_file(tmp_path):
-    """
-    Фикстура для создания временного лог-файла с данными.
-    ИСПОЛЬЗУЕТ КЛЮЧИ 'url' и '@timestamp', СОГЛАСНО СХЕМЕ В ТЕСТАХ.
-    """
     log_content = [
         {"@timestamp": "2025-06-22T10:00:00.123Z", "url": "/api/v1/users", "response_time": 0.1205},
         {"@timestamp": "2025-06-22T10:01:00.456Z", "url": "/api/v1/products", "response_time": 0.080},

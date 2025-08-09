@@ -9,7 +9,6 @@ LOG_SCHEMA = {
     'timestamp': '@timestamp'
 }
 
-
 def main():
 
     parser = argparse.ArgumentParser(description="Анализатор лог-файлов.")
