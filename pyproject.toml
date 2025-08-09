@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "log-analyzer"
+version = "0.1.0"
+description = "A script for parsing and analyzing log files."
+
+[tool.setuptools]
+packages = { find = {} }

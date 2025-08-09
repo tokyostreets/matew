@@ -5,7 +5,7 @@ from typing import List, Dict, Optional
 def parse_logs(file_paths: List[str], schema: Dict, filter_date_str: Optional[str] = None) -> List[Dict]:
     parsed_entries = []
     timestamp_key = schema['timestamp']
-    
+
     filter_date = None
     if filter_date_str:
         try:
@@ -25,17 +25,20 @@ def parse_logs(file_paths: List[str], schema: Dict, filter_date_str: Optional[st
                     continue
 
                 if filter_date:
-                    if timestamp_key in log_entry:
-                        ts_val = log_entry[timestamp_key]
-                        if ts_val:
-                            log_timestamp = datetime.fromisoformat(ts_val).date()
-                            if log_timestamp != filter_date:
-                                continue
-                        else: 
-                            continue #игнор если значение None
-                    else: 
-                        continue #если нет клоюча тоже игнор
-                
+                    ts_val = log_entry.get(timestamp_key)
+                    if not isinstance(ts_val, str):
+                        continue # игнор если нет ключа
+
+                    if ts_val.endswith('Z'):
+                        ts_val = ts_val[:-1]
+                    
+                    try:
+                        log_date = datetime.fromisoformat(ts_val).date()
+                        if log_date != filter_date:
+                            continue
+                    except ValueError:
+                        continue #игнор при некорректной дате 
+
                 parsed_entries.append(log_entry)
-                
+
     return parsed_entries
